@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#8ab6e9"><link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<title>SORA SPACE ❄️</title>
+<style>
+:root{--bg:#f6f8fd;--c:#fff;--tx:#2b3350;--mt:#7d869f;--pr:#8ab6e9;--lv:#b7a4e8;--ln:#e8ecf5;--sh:0 4px 18px #7f8fc01f}
+[data-th=d]{--bg:#161a2c;--c:#21263f;--tx:#e9ecf9;--mt:#9aa3c0;--ln:#2f3555;--sh:none}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Tahoma,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx);padding-top:env(safe-area-inset-top)}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 14px;display:flex;gap:8px;align-items:center}
+header b{font-size:17px;white-space:nowrap}
+input,select,textarea{width:100%;font:inherit;color:var(--tx);background:var(--c);border:1px solid var(--ln);border-radius:14px;padding:11px;margin:5px 0}
+textarea{min-height:80px}
+main{padding:4px 14px 150px;max-width:640px;margin:auto}
+.card{background:var(--c);border-radius:20px;padding:14px;margin:10px 0;box-shadow:var(--sh)}
+.hero{background:linear-gradient(135deg,var(--pr),var(--lv));color:#fff}
+.hero p{opacity:.95;margin-top:6px;line-height:1.7}
+h3{font-size:15px;margin-bottom:6px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0}
+.chip,.btn,.add{border:0;border-radius:20px;padding:9px 14px;font:inherit;white-space:nowrap;background:var(--c);color:var(--tx);box-shadow:var(--sh)}
+.chip.on,.btn,.add{background:linear-gradient(135deg,var(--pr),var(--lv));color:#fff}
+.btn.g{background:var(--ln);color:var(--tx)}
+.row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--ln)}
+.row:last-child{border:0}.rt{flex:1}.rt small{color:var(--mt);display:block;margin-top:2px}.rt p{font-size:13px;color:var(--mt);margin-top:4px;white-space:pre-wrap}
+.dn .rt b{text-decoration:line-through;opacity:.55}
+.ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--pr);background:none;color:var(--pr);flex:none;font-size:15px}
+.dn .ck{background:var(--pr);color:#fff}
+.x{background:none;border:0;opacity:.5;font-size:16px}
+.em{color:var(--mt);text-align:center;padding:14px;font-size:14px}
+.bar{height:8px;border-radius:8px;background:var(--ln);margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pr),var(--lv))}
+.pg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pg button{border:0;border-radius:14px;padding:10px 2px;background:var(--ln);color:var(--tx);font:inherit;font-size:13px}
+.pg .on{background:var(--pr);color:#fff}
+.ay{font-size:22px;line-height:2;text-align:center;font-family:"Traditional Arabic",Amiri,serif}
+.rw{display:flex;gap:8px;margin-top:8px}.rw>*{flex:1}
+nav{position:fixed;bottom:0;inset-inline:0;display:flex;background:var(--c);padding:6px 4px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -4px 18px #7f8fc01f;z-index:6}
+nav button{flex:1;border:0;background:none;color:var(--mt);font:inherit;font-size:11px;padding:4px}nav span{display:block;font-size:20px}
+nav .on{color:var(--pr);font-weight:bold}
+#fab{position:fixed;bottom:84px;inset-inline-start:16px;width:54px;height:54px;border-radius:50%;border:0;font-size:28px;color:#fff;background:linear-gradient(135deg,var(--pr),var(--lv));box-shadow:0 6px 20px #8ab6e980;z-index:6}
+#md{display:none;position:fixed;inset:0;background:#0006;z-index:9;align-items:flex-end}#md.on{display:flex}
+.sheet{background:var(--bg);width:100%;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0;padding:16px}
+label{font-size:13px;color:var(--mt)}
+#ts{position:fixed;top:70px;inset-inline:20px;background:var(--tx);color:var(--bg);padding:12px;border-radius:14px;text-align:center;z-index:20;opacity:0;transition:.3s;pointer-events:none}#ts.on{opacity:1}
+.cols{display:flex;gap:4px;align-items:flex-end;height:90px}.cols div{flex:1;text-align:center;font-size:11px;color:var(--mt)}.cols i{display:block;background:var(--lv);border-radius:6px 6px 0 0;min-height:3px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><b>SORA SPACE ❄️</b><input id="q" placeholder="🔍 بحث في المهام والملاحظات"></header>
+<main id="main"></main><button id="fab" data-a="new" data-v="task" aria-label="إضافة سريعة">＋</button>
+<nav id="nv"></nav><div id="md"></div><div id="ts"></div><input type="file" id="fl" accept=".json" hidden>
+<script>
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()),TD=()=>iso(new Date());
+const addD=(s,n)=>{const d=new Date(s+'T12:00');d.setDate(d.getDate()+n);return iso(d)};
+const fd=d=>new Date(d+'T12:00').toLocaleDateString('ar-EG',{weekday:'short',day:'numeric',month:'short'});
+const K='soraspace.v1';
+const init=()=>({items:[],pr:{},water:{},set:{name:'سورا',dark:0,calm:0,hide:[]}});
+let D;try{D=JSON.parse(localStorage.getItem(K))||init()}catch(e){D=init()}
+function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){toast('تعذّر الحفظ، المساحة ممتلئة أو التخزين غير متاح ⚠️')}}
+let tt;function toast(m){const t=$('#ts');t.textContent=m;t.className='on';clearTimeout(tt);tt=setTimeout(()=>t.className='',2200)}
+const T={
+task:{n:'مهمة',s:['الفئة',['شخصي','جامعة','تدريس','عبادة','بيت','عائلة']],rep:1,pri:1,chk:1},
+uni:{n:'جامعة',s:['النوع',['مادة','محاضرة','عملي','واجب','امتحان','درجة','مذكرة','خطة مذاكرة']],chk:1},
+stu:{n:'طالب',s:['الصف / المادة'],dl:'موعد الدرس القادم',nl:'الدروس التي شُرحت، الواجب، التقدّم، ملاحظات'},
+fam:{n:'عائلة',s:['النوع',['موعد','عيد ميلاد','مناسبة','زيارة','مسؤولية بيت','تذكير']],chk:1},
+goal:{n:'هدف',s:['النوع',['هدف شهري','هدف سنوي','تعلّم الإنجليزية','مهارة جديدة','مشروع']],prog:1},
+note:{n:'ملاحظة / يوميات',s:['النوع',['فكرة','يومية','تأمل','قلق','خطة','غير مرتب']]},
+care:{n:'عناية شخصية',s:['النوع',['روتين صباحي','روتين مسائي','بشرة','شعر','نظافة','موعد صحي']],rep:1,chk:1},
+qur:{n:'قرآن وعلم',s:['النوع',['ورد يومي','حفظ','مراجعة','تفسير','درس إسلامي','موعد شيخ','ذكر','تأمل']],rep:1,chk:1}};
+const isD=i=>i.rep==='d'?!!(i.dd&&i.dd[TD()]):!!i.done;
+function tog(i){if(i.rep==='d'){i.dd=i.dd||{};i.dd[TD()]?delete i.dd[TD()]:i.dd[TD()]=1}else{i.done=!i.done;i.dod=i.done?TD():null}}
+const PR=[
+['fajr','الفجر','بداية يومٍ جديد وأنتِ في معيّة الله.','أَقِمِ الصَّلَاةَ لِدُلُوكِ الشَّمْسِ إِلَىٰ غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ ۖ إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُودًا','الإسراء: 78','«رَكْعَتَا الْفَجْرِ خَيْرٌ مِنَ الدُّنْيَا وَمَا فِيهَا»','رواه مسلم','الفجر هدوءٌ قبل زحام اليوم، تضعين فيه قلبك أولًا.','اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا (رواه ابن ماجه)'],
+['dhuhr','الظهر','استراحة في منتصف النهار، التقطي أنفاسك.','يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ','البقرة: 153','«يَا بِلَالُ أَقِمِ الصَّلَاةَ أَرِحْنَا بِهَا»','رواه أبو داود','وسط الانشغال تذكّرين أن لك مكانًا آمنًا تعودين إليه.','اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ (رواه أبو داود)'],
+['asr','العصر','وقفة لطيفة قبل أن ينتهي النهار.','حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ','البقرة: 238','«مَنْ فَاتَتْهُ صَلَاةُ الْعَصْرِ فَكَأَنَّمَا وُتِرَ أَهْلَهُ وَمَالَهُ»','رواه البخاري','العصر تجديد للنية، مهما كان يومك مزدحمًا يمكنك أن تبدئي من جديد.','رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِن ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ (إبراهيم: 40)'],
+['maghrib','المغرب','سكينة الغروب، وقت الامتنان لما مضى.','وَأَقِمِ الصَّلَاةَ طَرَفَيِ النَّهَارِ وَزُلَفًا مِّنَ اللَّيْلِ ۚ إِنَّ الْحَسَنَاتِ يُذْهِبْنَ السَّيِّئَاتِ','هود: 114','«إِنَّ مَثَلَ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهَرٍ جَارٍ غَمْرٍ عَلَى بَابِ أَحَدِكُمْ يَغْتَسِلُ مِنْهُ كُلَّ يَوْمٍ خَمْسَ مَرَّاتٍ»','رواه مسلم','تغلقين فصلًا من اليوم بشكر، وتبدئين المساء بقلب أخف.','رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ (البقرة: 201)'],
+['isha','العشاء','ختام اليوم بطمأنينة قبل النوم.','إِنَّنِي أَنَا اللَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدْنِي وَأَقِمِ الصَّلَاةَ لِذِكْرِي','طه: 14','«مَنْ صَلَّى الْعِشَاءَ فِي جَمَاعَةٍ فَكَأَنَّمَا قَامَ نِصْفَ اللَّيْلِ»','رواه مسلم','تضعين همّ اليوم عند الله وتنامين وقد سلّمتِ أمرك له.','رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا (البقرة: 286)']];
+const HEART=['الصلاة موعدٌ دائم معك أنتِ قبل أن تكون التزامًا، تعالي كما أنتِ.','لا يُطلب منكِ الكمال، يكفي أن تعودي كلما ابتعدتِ.','قلبك يعرف الطريق، والباب مفتوح في أي وقت.','تعبُك مرئي، والسجدة مكان تضعين فيه كل ما أثقلك.','خطوة صغيرة اليوم أجمل من وعدٍ كبير مؤجَّل.','أنتِ لستِ متأخرة، أنتِ في طريقك.','اجعلي صلاتك مساحة هدوء تخصّك وحدك.'];
+const WHY=['أحبها لأنها توقف الضجيج ولو لدقائق.','أحبها لأنني أتحدث فيها بلا تمثيل ولا شرح.','أحبها لأنها تذكّرني بأن حياتي أكبر من قائمة مهامي.','أحبها لأنني أخرج منها أخفّ مما دخلت.','أحبها لأن الباب فيها مفتوح دائمًا للعودة.'];
+const MOT=['خطوة صغيرة اليوم تكفي 🤍','أنتِ تفعلين ما تستطيعين، وهذا جميل.','خذي يومك على مهل، كل شيء في وقته.','رتّبي قلبك قبل جدولك ❄️','تقدّمك لا يُقاس بعدد المهام فقط.','ابدئي بالأسهل، والباقي يأتي.','تعبك لن يضيع، والله لا يضيع أجر من أحسن عملًا.'];
+const dayI=()=>Math.floor(Date.now()/864e5);
+const prDone=d=>PR.filter(p=>D.pr[d]&&D.pr[d][p[0]]).length;
+let V='home',Q='',S={uni:'',life:'care',more:'note',ibd:'pray',cal:7,pk:null};
+function row(i){const c=T[i.ty],dn=isD(i);return`<div class="row ${dn?'dn':''}">${c.chk?`<button class="ck" data-a="tg" data-id="${i.id}">${dn?'✓':''}</button>`:''}<div class="rt" data-a="ed" data-id="${i.id}"><b>${E(i.t)}</b><small>${[i.s,i.d&&fd(i.d),i.pri==='h'?'⭐ مهم':'',i.rep==='d'?'🔁 يومي':''].filter(Boolean).map(E).join(' • ')}</small>${i.n?`<p>${E(i.n)}</p>`:''}${c.prog?`<div class="bar"><i style="width:${i.prog||0}%"></i></div><small>${i.prog||0}%</small>`:''}${i.ty==='stu'?`<div class="rw"><button class="chip" data-a="att" data-v="p" data-id="${i.id}">✅ حضور (${i.p||0})</button><button class="chip" data-a="att" data-v="a" data-id="${i.id}">غياب (${i.a||0})</button></div>`:''}</div><button class="x" data-a="del" data-id="${i.id}" aria-label="حذف">🗑</button></div>`}
+const chips=(arr,cur,k)=>`<div class="chips">${arr.map(([v,l])=>`<button class="chip ${cur===v?'on':''}" data-a="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
+const lst=(ty,f)=>{const a=D.items.filter(i=>i.ty===ty&&(!f||i.s===f)).sort((x,y)=>(isD(x)-isD(y))||((x.d||'9')>(y.d||'9')?1:-1));return`<div class="card">${a.length?a.map(row).join(''):'<p class="em">لا يوجد شيء هنا بعد. اضغطي «إضافة» للبدء 🤍</p>'}</div>`};
+const addB=ty=>`<button class="add" data-a="new" data-v="${ty}">＋ إضافة</button>`;
+const hid=k=>(D.set.hide||[]).includes(k);
+function taskList(){return D.items.filter(i=>i.ty==='task'&&(i.rep==='d'||(!i.done?(!i.d||i.d<=TD()):i.dod===TD())))}
+const VIEWS={
+home(){const h=new Date().getHours(),tk=taskList(),cal=D.set.calm,sh=cal?tk.filter(i=>i.pri==='h'||isD(i)):tk,dn=tk.filter(isD).length,pc=tk.length?Math.round(dn/tk.length*100):0;
+const top=D.items.filter(i=>i.ty==='task'&&!i.done&&i.pri==='h').slice(0,3),ap=D.items.filter(i=>i.ty!=='task'&&i.ty!=='note'&&i.d>=TD()&&!i.done).sort((a,b)=>a.d>b.d?1:-1).slice(0,4),p=D.pr[TD()]||{};
+return`<div class="card hero"><small>${new Date().toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</small><h3 style="font-size:20px;margin-top:6px">${h<12?'صباح الخير':'مساء الخير'} يا ${E(D.set.name)} 🤍</h3><p>${cal?'اليوم هادئ: لا شيء مطلوب منكِ سوى الأساسيات، وهذا كافٍ.':MOT[dayI()%7]}</p></div>
+<div class="card"><h3>إنجاز اليوم ${pc}%</h3><div class="bar"><i style="width:${pc}%"></i></div><div class="rw"><button class="chip ${cal?'on':''}" data-a="calm">🌙 يوم هادئ</button>${cal?'<button class="chip" data-a="post">تأجيل غير الأساسي للغد</button>':''}</div></div>
+<div class="card"><h3>صلواتي (${prDone(TD())}/5)</h3><div class="pg">${PR.map(x=>`<button class="${p[x[0]]?'on':''}" data-a="pr" data-v="${x[0]}">${x[1]}</button>`).join('')}</div></div>
+<div class="card"><h3>مهام اليوم</h3>${sh.length?sh.map(row).join(''):'<p class="em">لا توجد مهام لليوم، استمتعي بيومك ✨</p>'}${addB('task')}</div>
+${hid('prio')||cal?'':`<div class="card"><h3>أهم ثلاث أولويات</h3>${top.length?top.map(row).join(''):'<p class="em">اختاري «أولوية مهمة» عند إضافة مهمة لتظهر هنا.</p>'}</div>`}
+${hid('appt')||cal?'':`<div class="card"><h3>مواعيد قادمة</h3>${ap.length?ap.map(row).join(''):'<p class="em">لا مواعيد قادمة.</p>'}</div>`}
+${hid('note')?'':`<div class="card"><h3>ملاحظة سريعة</h3><textarea id="qn" placeholder="اكتبي ما يخطر ببالك..."></textarea><button class="btn" data-a="qn">حفظ الملاحظة</button></div>`}`},
+uni(){return`<h3>الجامعة</h3>${chips([['','الكل'],...T.uni.s[1].map(x=>[x,x])],S.uni,'su')}${addB('uni')}${lst('uni',S.uni)}`},
+stu(){const w=D.items.filter(i=>i.ty==='stu'&&i.d>=TD()&&i.d<=addD(TD(),7)).sort((a,b)=>a.d>b.d?1:-1);return`<h3>طلابي</h3>${addB('stu')}<div class="card"><h3>جدول الأسبوع</h3>${w.length?w.map(i=>`<div class="row"><div class="rt"><b>${E(i.t)}</b><small>${fd(i.d)} • ${E(i.s)}</small></div></div>`).join(''):'<p class="em">لا دروس مجدولة خلال 7 أيام.</p>'}</div>${lst('stu')}`},
+ibd(){let b='';
+if(S.ibd==='pray'){const m=PR.find(x=>x[0]===S.pk);b=`<div class="card hero"><h3>أهلًا بك في مساحتك مع الله 🤍</h3><p>${HEART[dayI()%7]}</p><small>رسالة لقلبي</small></div><div class="pg">${PR.map(x=>`<button class="${S.pk===x[0]?'on':''}" data-a="pk" data-v="${x[0]}">${x[1]}</button>`).join('')}</div>`+(m?`<div class="card"><h3>${m[1]}</h3><p>${m[2]}</p><div class="ay">${m[3]}</div><small>${m[4]}</small><p style="margin-top:10px"><b>${m[5]}</b><br><small>${m[6]}</small></p><p style="margin-top:10px">${m[7]}</p><p style="margin-top:10px">🤲 ${m[8]}</p><p class="em">وقوفك بين يدي الله لحظة لا يشبهها شيء، وإن فاتك شيء فباب العودة مفتوح.</p><button class="btn" data-a="pr" data-v="${m[0]}">${(D.pr[TD()]||{})[m[0]]?'✓ تمّت، تقبّل الله':'تمّت الصلاة ✔'}</button></div>`:'<p class="em">اختاري صلاة لتفتحي صفحتها.</p>')+`<div class="card"><h3>لماذا أحب الصلاة؟</h3><p>${WHY[dayI()%5]}</p></div><p class="em">النصوص من القرآن والسنّة الصحيحة، يُستحسن مراجعتها مع شيخك.</p>`}
+else if(S.ibd==='stats'){const d7=[...Array(7)].map((_,k)=>addD(TD(),k-6));const tot=d7.reduce((s,d)=>s+prDone(d),0);b=`<div class="card"><h3>صلواتي هذا الأسبوع: ${tot} من 35</h3><div class="cols">${d7.map(d=>`<div><i style="height:${prDone(d)*16}px"></i>${prDone(d)}<br>${new Date(d+'T12:00').toLocaleDateString('ar-EG',{weekday:'narrow'})}</div>`).join('')}</div><p class="em">كل صلاة هي خطوة، والأيام الأقل ليست فشلًا 🤍</p></div>`}
+else b=addB('qur')+lst('qur');
+return`<h3>عبادتي</h3>${chips([['pray','الصلوات'],['stats','إحصاءات'],['qur','قرآن وعلم']],S.ibd,'si')}${b}`},
+life(){const w=D.water[TD()]||0;return`<h3>حياتي</h3>${chips([['care','العناية'],['fam','العائلة'],['goal','أهدافي']],S.life,'sl')}${addB(S.life)}`+(S.life==='care'?`<div class="card"><h3>💧 الماء: ${w} / 8 أكواب</h3><div class="bar"><i style="width:${Math.min(100,w*12.5)}%"></i></div><div class="rw"><button class="btn" data-a="water" data-v="1">＋ كوب</button><button class="btn g" data-a="water" data-v="-1">－</button></div></div>`:'')+lst(S.life)},
+more(){let b='';
+if(S.more==='note')b=addB('note')+lst('note');
+else if(S.more==='cal'){const e=D.items.filter(i=>i.d&&i.ty!=='note'&&i.d>=TD()&&i.d<=addD(TD(),S.cal-1)).sort((a,b)=>a.d>b.d?1:-1);b=chips([[1,'اليوم'],[7,'أسبوع'],[30,'شهر']].map(([v,l])=>[v,l]),S.cal,'rg')+`<div class="card">${e.length?e.map(i=>`<small>${fd(i.d)}</small>${row(i)}`).join(''):'<p class="em">لا أحداث في هذه الفترة.</p>'}</div>`+addB('fam')}
+else if(S.more==='rep'){const dI=n=>{let c=0;const w=[...Array(n)].map((_,k)=>addD(TD(),-k));D.items.forEach(i=>{if(!T[i.ty].chk)return;if(i.rep==='d')c+=w.filter(d=>i.dd&&i.dd[d]).length;else if(i.done&&i.dod>=w[n-1])c++});return c};
+const pe=D.items.filter(i=>T[i.ty].chk&&i.rep!=='d'&&!i.done).length,pw=[...Array(30)].reduce((s,_,k)=>s+prDone(addD(TD(),-k)),0),g=D.items.filter(i=>i.ty==='goal'),ga=g.length?Math.round(g.reduce((s,i)=>s+(i.prog||0),0)/g.length):0,st=D.items.filter(i=>i.ty==='stu'),att=st.reduce((s,i)=>s+(i.p||0),0);
+b=`<div class="card"><h3>هذا الأسبوع</h3><p>✅ منجز: ${dI(7)}</p><p>⏳ قيد الانتظار: ${pe}</p><p>🕌 الصلوات: ${[...Array(7)].reduce((s,_,k)=>s+prDone(addD(TD(),-k)),0)} / 35</p><p>🎓 عناصر جامعية منجزة: ${D.items.filter(i=>i.ty==='uni'&&i.done&&i.dod>=addD(TD(),-6)).length}</p><p>👩‍🏫 حصص حضرها الطلاب: ${att} (${st.length} طلاب)</p></div><div class="card"><h3>هذا الشهر</h3><p>✅ منجز: ${dI(30)}</p><p>🕌 الصلوات: ${pw} / 150</p><p>🎯 متوسط تقدّم أهدافي: ${ga}%</p></div>`}
+else b=`<div class="card"><label>اسمك</label><input id="sn" value="${E(D.set.name)}"><button class="btn" data-a="sname">حفظ الاسم</button></div><div class="card"><h3>المظهر</h3><button class="btn" data-a="dk">${D.set.dark?'☀️ الوضع الفاتح':'🌙 الوضع الداكن'}</button></div><div class="card"><h3>إظهار في الرئيسية</h3>${[['prio','الأولويات'],['appt','المواعيد'],['note','الملاحظة السريعة']].map(([k,l])=>`<label style="display:block"><input type="checkbox" style="width:auto" data-a="hd" data-v="${k}" ${hid(k)?'':'checked'}> ${l}</label>`).join('')}</div><div class="card"><h3>التنبيهات</h3><button class="btn" data-a="nt">تفعيل التنبيهات</button><p class="em">ينبّهك عند فتح التطبيق بما لديك اليوم.</p></div><div class="card"><h3>نسخة احتياطية</h3><div class="rw"><button class="btn" data-a="bk">حفظ نسخة</button><button class="btn g" data-a="rs">استعادة</button></div></div>`;
+return`<h3>المزيد</h3>${chips([['note','يومياتي'],['cal','التقويم'],['rep','تقاريري'],['set','الإعدادات']],S.more,'sm')}${b}`}};
+function search(){const q=Q.toLowerCase(),r=D.items.filter(i=>(i.t+' '+(i.n||'')).toLowerCase().includes(q));return`<h3>نتائج البحث</h3><div class="card">${r.length?r.map(row).join(''):'<p class="em">لا نتائج.</p>'}</div>`}
+const NV=[['home','🏠','الرئيسية'],['uni','🎓','الجامعة'],['stu','👩‍🏫','الطلاب'],['ibd','🕌','عبادتي'],['life','🌸','حياتي'],['more','☰','المزيد']];
+function render(){document.documentElement.dataset.th=D.set.dark?'d':'l';$('#main').innerHTML=Q?search():VIEWS[V]();$('#nv').innerHTML=NV.map(n=>`<button class="${V===n[0]?'on':''}" data-a="nav" data-v="${n[0]}"><span>${n[1]}</span>${n[2]}</button>`).join('')}
+function form(ty,id){const i=id?D.items.find(x=>x.id===id):{},c=T[ty];
+$('#md').innerHTML=`<div class="sheet"><h3>${id?'تعديل':'إضافة'}</h3>${id?'':`<select onchange="form(this.value)">${Object.keys(T).map(k=>`<option value="${k}" ${k===ty?'selected':''}>${T[k].n}</option>`).join('')}</select>`}<input id="f-t" placeholder="العنوان" value="${E(i.t)}">${c.s[1]?`<select id="f-s">${c.s[1].map(o=>`<option ${i.s===o?'selected':''}>${o}</option>`).join('')}</select>`:`<input id="f-s" placeholder="${c.s[0]}" value="${E(i.s)}">`}<label>${c.dl||'التاريخ (اختياري)'}</label><input type="date" id="f-d" value="${i.d||''}">${c.pri?`<select id="f-pr"><option value="m">أولوية عادية</option><option value="h" ${i.pri==='h'?'selected':''}>أولوية مهمة ⭐</option></select>`:''}${c.rep?`<select id="f-r"><option value="">مرة واحدة</option><option value="d" ${i.rep==='d'?'selected':''}>تتكرر يوميًا</option></select>`:''}${c.prog?`<label>التقدّم</label><input type="range" id="f-p" min="0" max="100" step="5" value="${i.prog||0}">`:''}<textarea id="f-n" placeholder="${c.nl||'ملاحظات'}">${E(i.n)}</textarea><div class="rw"><button class="btn" data-a="sv" data-id="${id||''}" data-v="${ty}">حفظ</button><button class="btn g" data-a="cl">إلغاء</button></div></div>`;$('#md').className='on'}
+const cl=()=>$('#md').className='';
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.type==='checkbox')return;const a=b.dataset.a,id=b.dataset.id,v=b.dataset.v,it=id?D.items.find(x=>x.id===id):null,t=TD();
+switch(a){
+case'tg':tog(it);break;case'ed':form(it.ty,id);return;case'new':form(v);return;case'cl':cl();return;
+case'del':if(!confirm('حذف هذا العنصر؟'))return;D.items=D.items.filter(x=>x.id!==id);toast('تم الحذف');break;
+case'nav':V=v;Q='';$('#q').value='';S.pk=null;break;case'su':S.uni=v;break;case'sl':S.life=v;break;case'sm':S.more=v;break;case'si':S.ibd=v;S.pk=null;break;case'pk':S.pk=v;break;case'rg':S.cal=+v;break;
+case'pr':{const x=D.pr[t]=D.pr[t]||{};x[v]=!x[v];toast(x[v]?'تقبّل الله صلاتك 🤍':'تم التعديل');break}
+case'att':it[v]=(it[v]||0)+1;toast('تم التسجيل ✅');break;
+case'water':D.water[t]=Math.max(0,(D.water[t]||0)+ +v);break;
+case'calm':D.set.calm=D.set.calm?0:1;toast(D.set.calm?'يوم هادئ 🌙 خذي راحتك':'عودة لليوم العادي');break;
+case'post':D.items.forEach(i=>{if(i.ty==='task'&&i.pri!=='h'&&!isD(i)&&i.rep!=='d')i.d=addD(t,1)});toast('تأجّلت المهام غير الأساسية للغد، لا بأس 🤍');break;
+case'qn':{const x=$('#qn').value.trim();if(!x){toast('اكتبي شيئًا أولًا');return}D.items.push({id:'i'+Date.now(),ty:'note',t:x.slice(0,40),s:'فكرة',n:x,d:'',dd:{}});toast('تم حفظ الملاحظة ✅');break}
+case'sname':D.set.name=$('#sn').value.trim()||'سورا';toast('تم الحفظ ✅');break;
+case'dk':D.set.dark=D.set.dark?0:1;break;
+case'hd':{const h=D.set.hide=D.set.hide||[];h.includes(v)?h.splice(h.indexOf(v),1):h.push(v);break}
+case'nt':if(!('Notification'in window)){toast('جهازك لا يدعم التنبيهات');return}Notification.requestPermission().then(r=>toast(r==='granted'?'تم تفعيل التنبيهات ✅':'لم يتم السماح بالتنبيهات'));return;
+case'bk':{const f=new Blob([JSON.stringify(D)],{type:'application/json'}),l=document.createElement('a');l.href=URL.createObjectURL(f);l.download='sora-space-'+t+'.json';l.click();toast('تم حفظ النسخة الاحتياطية ✅');return}
+case'rs':$('#fl').click();return;
+case'sv':{const tt=$('#f-t').value.trim();if(!tt){toast('اكتبي عنوانًا أولًا ✍️');return}const g=k=>{const x=$('#f-'+k);return x?x.value:undefined},o=it||{id:'i'+Date.now(),ty:v,dd:{}};Object.assign(o,{t:tt,s:g('s'),d:g('d'),n:g('n')});if(g('pr'))o.pri=g('pr');if(g('r')!==undefined)o.rep=g('r');if(g('p')!==undefined)o.prog=+g('p');if(!it)D.items.push(o);cl();toast('تم الحفظ ✅');break}}
+save();render()});
+document.addEventListener('change',e=>{if(e.target.dataset.a==='hd'){const h=D.set.hide=D.set.hide||[],v=e.target.dataset.v;h.includes(v)?h.splice(h.indexOf(v),1):h.push(v);save();render()}});
+$('#fl').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.items))throw 0;if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المختارة. متابعة؟'))return;D=Object.assign(init(),x);save();render();toast('تمت الاستعادة ✅')}catch(_){toast('الملف غير صالح ⚠️')}};r.readAsText(f);e.target.value=''};
+$('#q').oninput=e=>{Q=e.target.value.trim();render()};
+render();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+if('Notification'in window&&Notification.permission==='granted'){const n=taskList().filter(i=>!isD(i)).length;if(n)navigator.serviceWorker&&navigator.serviceWorker.ready.then(r=>r.showNotification('SORA SPACE ❄️',{body:'لديك '+n+' مهام اليوم، على مهلك 🤍'}))}
+</script></body></html>
